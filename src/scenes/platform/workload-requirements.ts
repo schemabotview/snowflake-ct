@@ -6,7 +6,7 @@ export const workloadRequirements: Scene = {
   id: 'workload-requirements',
   title: 'Retail sources, one data product, many consumers',
   flow: 'TB',
-  padding: 0.06,
+  padding: 0.04,
   nodes: [
     {
       id: 'sources',
@@ -25,7 +25,16 @@ export const workloadRequirements: Scene = {
       pattern: 'group',
       cols: 1,
       children: [
-        { id: 'product', label: 'Data product', sub: 'trusted details and summaries', pattern: 'storage', icon: 'snowflake' },
+        {
+          id: 'product',
+          label: 'Analytical data product',
+          pattern: 'storage',
+          cols: 2,
+          children: [
+            { id: 'details', label: 'Order details', sub: 'one row per order, cleaned', pattern: 'storage', icon: 'table' },
+            { id: 'summaries', label: 'Business summaries', sub: 'revenue by day and store', pattern: 'storage', icon: 'barchart' },
+          ],
+        },
         {
           id: 'requirements',
           label: 'Requirements',

@@ -6,6 +6,7 @@ export const costLedger: Scene = {
   id: 'cost-ledger',
   title: 'Where the credits go, and what suspending does',
   flow: 'TB',
+  padding: 0.04,
   nodes: [
     {
       id: 'warehouse-ddl',
@@ -28,6 +29,7 @@ export const costLedger: Scene = {
         ['Cloud services', 'only above 10% of daily warehouse use', 'usually 0'],
         ['Serverless', 'Snowpipe, serverless tasks', 'metered per feature'],
         ['Storage', '1.5 TB average on disk', 'per TB per month'],
+        ['Compute total', 'BI_WH + LOAD_WH', '324 credits'],
       ],
     },
     {

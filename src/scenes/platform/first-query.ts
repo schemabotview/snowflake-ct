@@ -6,34 +6,35 @@ export const firstQuery: Scene = {
   id: 'first-query',
   title: 'A first query, input to result',
   flow: 'TB',
+  padding: 0.17,
   nodes: [
     {
       id: 'orders-input',
       kind: 'table',
       label: 'RETAIL.SALES.ORDERS',
-      headers: ['ORDER_ID', 'ORDER_DATE', 'ORDER_STATUS', 'ORDER_TOTAL'],
+      headers: ['ORDER_ID', 'CUSTOMER_ID', 'ORDER_DATE', 'ORDER_STATUS', 'ORDER_TOTAL'],
       values: [
-        ['1001', '2026-10-01', 'SHIPPED', '89.50'],
-        ['1002', '2026-10-01', 'PENDING', '58.00'],
-        ['1003', '2026-10-01', 'SHIPPED', '74.90'],
-        ['1004', '2026-10-01', 'CANCELLED', '19.99'],
-        ['1005', '2026-10-01', 'SHIPPED', '48.00'],
-        ['1006', '2026-10-02', 'SHIPPED', '120.00'],
+        ['1001', 'C-207', '2026-10-01', 'SHIPPED', '89.50'],
+        ['1002', 'C-311', '2026-10-01', 'PENDING', '58.00'],
+        ['1003', 'C-207', '2026-10-01', 'SHIPPED', '74.90'],
+        ['1004', 'C-150', '2026-10-01', 'CANCELLED', '19.99'],
+        ['1005', 'C-388', '2026-10-01', 'SHIPPED', '48.00'],
+        ['1006', 'C-311', '2026-10-02', 'SHIPPED', '120.00'],
       ],
     },
     {
       id: 'query',
       kind: 'code',
       filename: 'first_query.sql',
-      label: `USE ROLE analyst;            -- whose privileges apply
-USE WAREHOUSE bi_wh;         -- which compute runs it
+      label: `USE ROLE analyst;                 -- whose privileges apply to this session
+USE WAREHOUSE bi_wh;              -- which compute executes (and bills) it
 
 SELECT order_status,
        COUNT(*)         AS orders,
        SUM(order_total) AS revenue
-FROM   retail.sales.orders   -- fully qualified name
-WHERE  order_date = '2026-10-01'
-GROUP  BY order_status
+FROM   retail.sales.orders        -- database.schema.table, no guessing
+WHERE  order_date = '2026-10-01'  -- keeps 5 of 6 rows
+GROUP  BY order_status            -- the grain of the result
 ORDER  BY revenue DESC;`,
     },
     {

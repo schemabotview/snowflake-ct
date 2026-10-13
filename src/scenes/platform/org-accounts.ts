@@ -18,6 +18,7 @@ export const orgAccounts: Scene = {
   id: 'org-accounts',
   title: 'Organisation, accounts, Regions and editions',
   flow: 'TB',
+  padding: 0.04,
   nodes: [
     {
       id: 'org',

@@ -6,15 +6,20 @@ export const sessionContext: Scene = {
   id: 'session-context',
   title: 'Session context and warehouse isolation',
   flow: 'TB',
+  padding: 0.05,
   nodes: [
     {
       id: 'context-query',
       kind: 'code',
-      filename: 'context.sql',
-      label: `SELECT CURRENT_ROLE(),       -- ANALYST
-       CURRENT_WAREHOUSE(),  -- BI_WH
-       CURRENT_DATABASE(),   -- RETAIL
-       CURRENT_SCHEMA();     -- SALES`,
+      filename: 'session.sql',
+      label: `USE ROLE analyst;          -- privileges
+USE WAREHOUSE bi_wh;       -- compute
+USE SCHEMA retail.sales;   -- name resolution
+
+SELECT COUNT(*) FROM orders;  -- = RETAIL.SALES.ORDERS
+
+SELECT CURRENT_ROLE(), CURRENT_WAREHOUSE(),
+       CURRENT_DATABASE(), CURRENT_SCHEMA();`,
     },
     {
       id: 'session',
@@ -34,14 +39,24 @@ export const sessionContext: Scene = {
       pattern: 'service',
       cols: 2,
       children: [
-        { id: 'bi-wh', label: 'BI_WH', sub: 'Small, dashboards', pattern: 'service', icon: 'cpu' },
-        { id: 'load-wh', label: 'LOAD_WH', sub: 'Medium, nightly loads', pattern: 'service', icon: 'cpu' },
+        { id: 'bi-wh', label: 'BI_WH', sub: 'Small · dashboards · suspend 60 s', pattern: 'service', icon: 'cpu' },
+        { id: 'load-wh', label: 'LOAD_WH', sub: 'Medium · nightly loads · suspend 60 s', pattern: 'service', icon: 'cpu' },
       ],
     },
-    { id: 'shared-storage', label: 'Stored tables', sub: 'one copy, read by both', pattern: 'storage', icon: 'database' },
+    {
+      id: 'shared-storage',
+      label: 'Storage layer — one copy, read by both',
+      pattern: 'storage',
+      cols: 3,
+      children: [
+        { id: 'tbl-orders', label: 'ORDERS', sub: 'RETAIL.SALES', pattern: 'storage', icon: 'table' },
+        { id: 'tbl-customers', label: 'CUSTOMERS', sub: 'RETAIL.SALES', pattern: 'storage', icon: 'table' },
+        { id: 'tbl-products', label: 'PRODUCTS', sub: 'RETAIL.REFERENCE', pattern: 'storage', icon: 'table' },
+      ],
+    },
   ],
   edges: [
-    { source: 'context-query', target: 'session', label: 'reports' },
+    { source: 'context-query', target: 'session', label: 'sets and reports' },
     { source: 'session', target: 'warehouses', label: 'runs on BI_WH' },
     { source: 'bi-wh', target: 'shared-storage' },
     { source: 'load-wh', target: 'shared-storage' },

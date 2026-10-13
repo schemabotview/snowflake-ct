@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "check": "node scripts/check-content.mjs",
+    "density": "node scripts/measure-density.mjs",
     "preview": "vite preview",
     "build:snapshot": "vite build --outDir dist-snapshot",
     "capture": "vite preview --outDir dist-snapshot --port 5181",

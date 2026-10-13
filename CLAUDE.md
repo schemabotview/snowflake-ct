@@ -39,10 +39,10 @@ cloud, Region, edition and table type where they matter.
 
 | Course | Scene id | Used by | Shape |
 | --- | --- | --- | --- |
-| platform | `workload-requirements` | §1 | sources → Snowflake (product + requirements) → consumers |
+| platform | `workload-requirements` | §1 | sources → Snowflake (details + summaries, requirements) → consumers |
 | platform | `three-layers` | §2 | cloud services / compute / storage, with "owned by you" below |
 | platform | `org-accounts` | §3 | organisation of three accounts + identifier code card |
-| platform | `session-context` | §4 | context query → session context → warehouses → stored tables |
+| platform | `session-context` | §4 | session.sql → session context → warehouses → storage layer (3 tables) |
 | platform | `first-query` | §5 | input table → annotated SQL → result table |
 | platform | `cost-ledger` | §6 | warehouse DDL → assumption ledger → lifecycle |
 
@@ -124,7 +124,11 @@ Levers: **add real content, not padding**; **restack** a board toward the pane's
 scene `padding` to 0.04 for boards that float, **raise** it (0.12–0.17) for tall boards that touch
 the eyebrow.
 
-These are read off the rendered route by eye — `check` models no density at all. The two ratios come
+`npm run density` (`scripts/measure-density.mjs`, needs `npm run dev` running) measures these off the
+rendered route — slide height ratio, scene width/height/area ratio, eyebrow overlap — and flags any
+frame under target. `check` models no density at all, and its slide-height model deliberately
+*overestimates* (a slide modelling 890px rendered at 0.75 of the pane), so a slide can pass `check`
+and still sit under the 80 % floor; only the rendered measurement shows it. The two ratios come
 from one repo's ~80 frames of diagram-and-code-card boards, so a deliberately sparse board can sit
 under them. Targets, not thresholds.
 
@@ -132,9 +136,10 @@ under them. Targets, not thresholds.
 
 ```sh
 npm run build && npx tsc --noEmit && npm run check
+npm run density   # with `npm run dev` running; PUPPETEER_EXECUTABLE_PATH=/opt/pw-browsers/chromium in cloud sessions
 ```
 
-All three are a **floor, not proof** — they pass on frames that are visually wrong. The rendered
+All four are a **floor, not proof** — they pass on frames that are visually wrong. The rendered
 route is the real bar, and the owner reviews it.
 
 ## Working agreement
