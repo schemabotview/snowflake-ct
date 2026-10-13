@@ -22,7 +22,7 @@ Routes are `#/<course>-<section>`, e.g. `#/platform-first-query`. `#/` is the ca
 | # | Course id | Chapter | Sections | Authored |
 | --- | --- | --- | --- | --- |
 | 1 | `platform` | Platform Foundations and a First Query | 6 | ✓ |
-| 2 | `access` | Objects, Identities, and Access | 8 | |
+| 2 | `access` | Objects, Identities, and Access | 8 | ✓ |
 | 3 | `tables` | Tables and Reliable Data Changes | 8 | |
 | 4 | `loading` | Loading, Unloading, and Reconciliation | 8 | |
 | 5 | `transform` | Querying, Transformation, and Analytical Serving | 8 | |

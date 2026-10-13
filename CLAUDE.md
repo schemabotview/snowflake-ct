@@ -22,8 +22,13 @@ Routes are `#/<courseId>-<sectionId>`. Course ids, in syllabus order:
 
 Every course follows one retail example (orders, customer updates, reference data → trusted details
 and business summaries). Keep table, warehouse and role names consistent across courses:
-`RETAIL.SALES.ORDERS`, warehouses `BI_WH` (Small) and `LOAD_WH` (Medium), role `ANALYST`,
-organisation `RETAILCO` with accounts `PROD`, `EUPROD`, `DEV`.
+database `RETAIL` with schemas `RAW` (as landed: `ORDERS`, stage `LANDING`), `SALES` (cleaned:
+`ORDERS`, `CUSTOMERS`, view `DAILY_REVENUE`; managed access) and `REFERENCE` (`PRODUCTS`, `STORES`);
+warehouses `BI_WH` (Small) and `LOAD_WH` (Medium); account roles `ANALYST`, `LOADER`, `RETAIL_ADMIN`
+(owns `RETAIL`, granted to `SYSADMIN`); database roles `RETAIL.SALES_READ`, `RETAIL.RAW_WRITE`;
+users `ANA` (PERSON) and `LOADER_SVC` (SERVICE); storage integration `S3_RETAIL_INT` on
+`s3://retailco-landing/orders/`; organisation `RETAILCO` with accounts `PROD`, `EUPROD`, `DEV`.
+Row counts: `SALES.ORDERS` holds 6 orders, `RAW.ORDERS` 9 rows (3 duplicate deliveries).
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -45,6 +50,14 @@ cloud, Region, edition and table type where they matter.
 | platform | `session-context` | §4 | session.sql → session context → warehouses → storage layer (3 tables) |
 | platform | `first-query` | §5 | input table → annotated SQL → result table |
 | platform | `cost-ledger` | §6 | warehouse DDL → assumption ledger → lifecycle |
+| access | `object-tree` | §1 | account-level objects + database RETAIL (3 schemas) → names.sql |
+| access | `name-resolution` | §2 | unqualified statement → two sessions (6 vs 9) → case-rules table |
+| access | `users-authentication` | §3 | network policy → PERSON / SERVICE users → service user DDL |
+| access | `role-hierarchy` | §4 | system roles → RETAIL_ADMIN → working roles → users → roles.sql |
+| access | `access-chain` | §5 | four-link privilege chain → role matrix → denied query |
+| access | `database-roles` | §6 | database roles → account roles (+ share) → DDL |
+| access | `managed-access` | §7 | standard vs managed access schema → future grants |
+| access | `stage-access` | §8 | Snowflake privileges → AWS IAM → integration + stage DDL |
 
 ## Valid `icon:` keys
 
@@ -119,6 +132,9 @@ builds green, reads correctly, and leaves half its pane empty. Against the ~1080
 | scene, binding axis | ≥ 0.85 of the pane | the board should reach the edge it is limited by |
 | scene, area | ≥ 0.55 of the pane (w × h) | a wide board that fills the width but a third of the height wastes the pane |
 | eyebrow | no node under the top-left eyebrow label | boards that bind on height run up to y≈30 |
+
+Engine note: a container with `flow: 'LR'` **and** `cols` can stack its children vertically —
+drop the `flow` and let `cols` lay out the row.
 
 Levers: **add real content, not padding**; **restack** a board toward the pane's ~1:1 aspect; lower
 scene `padding` to 0.04 for boards that float, **raise** it (0.12–0.17) for tall boards that touch
