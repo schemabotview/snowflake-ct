@@ -29,6 +29,9 @@ warehouses `BI_WH` (Small) and `LOAD_WH` (Medium); account roles `ANALYST`, `LOA
 users `ANA` (PERSON) and `LOADER_SVC` (SERVICE); storage integration `S3_RETAIL_INT` on
 `s3://retailco-landing/orders/`; organisation `RETAILCO` with accounts `PROD`, `EUPROD`, `DEV`.
 Row counts: `SALES.ORDERS` holds 6 orders, `RAW.ORDERS` 9 rows (3 duplicate deliveries).
+Chapter 3 adds: transient `RAW.ORDERS_BATCH`, `RAW.CUSTOMER_UPDATES` (C-207 Leeds 09:00 / York 11:30,
+C-388 Bath), `SALES.CUSTOMERS` (C-150 Derby, C-207 Hull → York after MERGE), clone database `RETAIL_DEV`,
+the 14:05 bad-UPDATE incident on 2 October.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -58,6 +61,14 @@ cloud, Region, edition and table type where they matter.
 | access | `database-roles` | §6 | database roles → account roles (+ share) → DDL |
 | access | `managed-access` | §7 | standard vs managed access schema → future grants |
 | access | `stage-access` | §8 | Snowflake privileges → AWS IAM → integration + stage DDL |
+| tables | `data-contract` | §1 | ORDERS schema + contract table → type guard |
+| tables | `constraint-enforcement` | §2 | enforcement table → two inserts → constraint DDL + dup check |
+| tables | `table-lifecycle` | §3 | kinds table → Time Travel / Fail-safe / purged → DDL |
+| tables | `transaction-boundary` | §4 | reload script → intended vs executed commits |
+| tables | `merge-dedup` | §5 | source + target tables → MERGE with QUALIFY → result |
+| tables | `time-travel` | §6 | incident timeline → read, clone, swap, UNDROP |
+| tables | `clone-storage` | §7 | two tables → source-only / shared / clone-only partitions → DDL |
+| tables | `table-types` | §8 | type matrix → selection questions → retail fit |
 
 ## Valid `icon:` keys
 
