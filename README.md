@@ -26,7 +26,7 @@ Routes are `#/<course>-<section>`, e.g. `#/platform-first-query`. `#/` is the ca
 | 3 | `tables` | Tables and Reliable Data Changes | 8 | ✓ |
 | 4 | `loading` | Loading, Unloading, and Reconciliation | 8 | ✓ |
 | 5 | `transform` | Querying, Transformation, and Analytical Serving | 8 | ✓ |
-| 6 | `incremental` | Ongoing Changes and Incremental Correctness | 7 | |
+| 6 | `incremental` | Ongoing Changes and Incremental Correctness | 7 | ✓ |
 | 7 | `pipelines` | Pipeline Orchestration and Dynamic Tables | 8 | |
 | 8 | `performance` | Performance and Cost Reasoning | 9 | |
 | 9 | `governance` | Governance, Sharing, and Consumption | 7 | |

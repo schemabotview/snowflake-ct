@@ -3,6 +3,7 @@ import { access } from './access'
 import { tables } from './tables'
 import { loading } from './loading'
 import { transform } from './transform'
+import { incremental } from './incremental'
 import type { Course, Section } from './types'
 
 // Course registry, in syllabus order. Courses are added here as each is authored.
@@ -12,6 +13,7 @@ export const COURSES: Record<string, Course> = {
   [tables.id]: tables,
   [loading.id]: loading,
   [transform.id]: transform,
+  [incremental.id]: incremental,
 }
 
 export type { Course, Section }

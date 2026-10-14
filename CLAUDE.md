@@ -41,6 +41,10 @@ Chapter 5 adds: `ORDERS.STORE_ID` (S-01 Leeds: 1001/1003/1005; S-02 York: 1002/1
 (1001/1003 C-207, 1002/1006 C-311, 1004 C-150, 1005 C-388), events 1007 (C-412, 2 items) and 1008
 (C-150, no items), `DAILY_REVENUE` = S-01 212.40 / S-02 58.00 on 1 Oct, S-02 120.00 on 2 Oct,
 mart `RETAIL.MART` with type-2 `DIM_CUSTOMER`, UDF `SALES.NET_AMOUNT`, procedure `SALES.RELOAD_DAY`.
+Chapter 6 adds: CDC log `RAW.CUSTOMER_CHANGES` (SOURCE_SEQ, OP, CUSTOMER_ID, CITY, CHANGED_AT,
+LOADED_AT) with 2 Oct events 101 U C-207 Leeds 09:00 · 102 I C-388 Bath 10:15 · 103 U C-207 York 11:30 ·
+104 D C-311 12:00 (101 arrives late, after 103); append-only stream `RAW.CUSTOMER_CHANGES_S` (+ audit
+stream); `SALES.CUSTOMERS` carries `SOURCE_SEQ` (before: C-150 Derby 37, C-207 Hull 64, C-311 Ripon 88).
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -94,6 +98,13 @@ cloud, Region, edition and table type where they matter.
 | transform | `dimensional-model` | §6 | star schema → type-2 rows → as-was vs as-is |
 | transform | `snowpark-actions` | §7 | Python → per-call movement table → client vs warehouse |
 | transform | `procedures-udfs` | §8 | UDF + procedure DDL → comparison → rights |
+| incremental | `cdc-vs-stream` | §1 | vertical CDC path beside events + CDC-vs-stream table |
+| incremental | `offset-timeline` | §2 | vertical version timeline beside stream DDL + staleness |
+| incremental | `consume-offsets` | §3 | three attempts → consume.sql → one stream per consumer |
+| incremental | `stream-output` | §4 | standard stream rows → reading it → mode choice |
+| incremental | `incremental-merge` | §5 | guarded MERGE → before / after tables |
+| incremental | `late-arrivals` | §6 | arrival table → rule table → tombstone + business time |
+| incremental | `recovery-decisions` | §7 | situation table → rebuild.sql → principles |
 
 ## Valid `icon:` keys
 
@@ -181,7 +192,9 @@ the eyebrow.
 rendered route — slide height ratio, scene width/height/area ratio, eyebrow overlap — and flags any
 frame under target. `check` models no density at all, and its slide-height model deliberately
 *overestimates* (a slide modelling 890px rendered at 0.75 of the pane), so a slide can pass `check`
-and still sit under the 80 % floor; only the rendered measurement shows it. The two ratios come
+and still sit under the 80 % floor; only the rendered measurement shows it. When a slide renders short but
+`check` is near 1000, lengthen the bullets the model already counts as two lines but that render on
+one (roughly 50–60 characters, often bold- or chip-heavy): the render grows, the model doesn't. The two ratios come
 from one repo's ~80 frames of diagram-and-code-card boards, so a deliberately sparse board can sit
 under them. Targets, not thresholds.
 
