@@ -32,6 +32,10 @@ Row counts: `SALES.ORDERS` holds 6 orders, `RAW.ORDERS` 9 rows (3 duplicate deli
 Chapter 3 adds: transient `RAW.ORDERS_BATCH`, `RAW.CUSTOMER_UPDATES` (C-207 Leeds 09:00 / York 11:30,
 C-388 Bath), `SALES.CUSTOMERS` (C-150 Derby, C-207 Hull → York after MERGE), clone database `RETAIL_DEV`,
 the 14:05 bad-UPDATE incident on 2 October.
+Chapter 4 adds: file format `RAW.CSV_ORDERS` (DD/MM/YYYY dates), files `orders_20261001.csv` (6 orders,
+manifest total 410.39) and `orders_resend.csv` (1001–1003 again — the source of RAW's 3 duplicates;
+RAW total 632.79), `RAW.ORDERS` lineage columns `SOURCE_FILE`/`SOURCE_ROW`, `RAW.ORDERS_REJECTS`,
+pipe `RAW.ORDERS_PIPE`, streaming `EVENTS_PIPE` → `RAW.ORDER_EVENTS`, export stage `SALES.EXPORTS`.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -69,6 +73,14 @@ cloud, Region, edition and table type where they matter.
 | tables | `time-travel` | §6 | incident timeline → read, clone, swap, UNDROP |
 | tables | `clone-storage` | §7 | two tables → source-only / shared / clone-only partitions → DDL |
 | tables | `table-types` | §8 | type matrix → selection questions → retail fit |
+| loading | `stage-types` | §1 | internal / external stage rows → file format → LIST result |
+| loading | `copy-mapping` | §2 | CSV lines → mapped COPY → typed rows with lineage |
+| loading | `rejected-rows` | §3 | dry run → errors → ON_ERROR choices → quarantine |
+| loading | `file-identity` | §4 | three COPY runs → COPY_HISTORY → boundaries → key check |
+| loading | `snowpipe-flow` | §5 | auto-ingest path → COPY vs Snowpipe → pipe DDL → evidence |
+| loading | `streaming-channels` | §6 | vertical path beside offsets, architectures, path choice |
+| loading | `schema-change` | §7 | evolution DDL → three source changes → responses |
+| loading | `reconcile-unload` | §8 | reconciliation → unload → handoff |
 
 ## Valid `icon:` keys
 
@@ -144,8 +156,9 @@ builds green, reads correctly, and leaves half its pane empty. Against the ~1080
 | scene, area | ≥ 0.55 of the pane (w × h) | a wide board that fills the width but a third of the height wastes the pane |
 | eyebrow | no node under the top-left eyebrow label | boards that bind on height run up to y≈30 |
 
-Engine note: a container with `flow: 'LR'` **and** `cols` can stack its children vertically —
-drop the `flow` and let `cols` lay out the row.
+Engine note — rows of children: a container **without** internal `edges` lays out a row from
+`cols` alone (adding `flow: 'LR'` there can stack it vertically). A container **with** internal
+`edges` stacks top-to-bottom unless it sets `flow: 'LR'`. Check every container row on the route.
 
 Levers: **add real content, not padding**; **restack** a board toward the pane's ~1:1 aspect; lower
 scene `padding` to 0.04 for boards that float, **raise** it (0.12–0.17) for tall boards that touch
