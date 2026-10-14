@@ -8,6 +8,7 @@ import { pipelines } from './pipelines'
 import { performance } from './performance'
 import { governance } from './governance'
 import { operations } from './operations'
+import { architecture } from './architecture'
 import type { Course, Section } from './types'
 
 // Course registry, in syllabus order. Courses are added here as each is authored.
@@ -22,6 +23,7 @@ export const COURSES: Record<string, Course> = {
   [performance.id]: performance,
   [governance.id]: governance,
   [operations.id]: operations,
+  [architecture.id]: architecture,
 }
 
 export type { Course, Section }

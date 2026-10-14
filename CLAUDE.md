@@ -67,6 +67,11 @@ rename `ORDER_TOTAL` → `GROSS_TOTAL`; the 7 Oct incident (IAM trust policy edi
 `LOAD_ORDERS` failed 05:30 → fixed 08:40); roles `RETAIL_OPS`, `RETAIL_AUDITOR`; `PROD_DR` in AWS US East
 (PROD is Enterprise in AWS US West: replication yes, failover no), 30-min refresh, RPO ≤ 60 min, RTO ≤ 2 h;
 the 9 Oct leaked `LOADER_SVC` key; the `BI_WH` 3-cluster runaway weekend.
+Chapter 11 adds: four consumers (finance ≤ 30 min 07–19h, store managers by 07:00, York partner daily by
+06:00, data science as-was history); `product.yml` (owner retail-data team, steward finance); per-input
+choice — orders via dynamic tables, customers via stream + guarded MERGE, reference data nightly rebuild;
+migration off on-prem `LEGACY_DW` (14-day parallel run, retire after 30 quiet days; legacy does not net
+refunds, so it reconciles against v1); ADR-011 (revenue freshness, supersedes ADR-004 nightly rebuild).
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -160,6 +165,11 @@ cloud, Region, edition and table type where they matter.
 | operations | `recovery-layers` | §7 | mechanism table → table-type boundaries → backup sketch |
 | operations | `failover-plan` | §8 | two accounts → edition table → RPO/RTO → outside dependencies |
 | operations | `security-runbook` | §9 | leaked-key runbook → runaway-warehouse runbook → principles |
+| architecture | `product-requirements` | §1 | consumers → requirements table → product.yml → ownership |
+| architecture | `architecture-options` | §2 | three lanes (rebuild / streams+tasks / DTs) → comparison → per-input choice |
+| architecture | `staged-cutover` | §3 | vertical cutover stages beside reconcile SQL, acceptance, rollback boundaries |
+| architecture | `decision-records` | §4 | ADR card → decision log → record parts → supersession |
+| architecture | `continuation` | §5 | specialist surfaces → retail triggers → backlog → next steps |
 
 ## Valid `icon:` keys
 
