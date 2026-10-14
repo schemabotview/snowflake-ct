@@ -50,6 +50,11 @@ Chapter 7 adds: schema `RETAIL.OPS` with tasks `LOAD_ORDERS` (root, CRON 05:30 E
 `APPLY_CUSTOMERS`; 3 Oct run where BUILD_LINES failed; dynamic tables `MART.ORDERS_CLEAN` (DOWNSTREAM)
 → `MART.REVENUE_DT` (15 min; 09:24 refresh missed at 22 min); DMFs + alert `OPS.ORDERS_STALE`;
 dbt project `OPS.RETAIL_DBT`; the 4 Oct double-scheduled build.
+Chapter 8 adds (illustrative, labelled as such on screen): `SALES.ORDERS_HISTORY` — 3 years, ~1.2 B rows,
+18,240 micro-partitions; the October store-revenue query 14.2 s full scan (TO_CHAR predicate) → 1.1 s
+pruned (312 partitions); clustering on ORDER_DATE ≈ 6 credits/day vs 1.5 credits/day saved at 200 runs;
+October ledger (BI_WH 310, LOAD_WH 75, clustering 180 …); resource monitor `BI_MONTHLY` (400 credits);
+tag `OPS.COST_CENTER`.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -118,6 +123,15 @@ cloud, Region, edition and table type where they matter.
 | pipelines | `choose-automation` | §6 | comparison → customers as a DT → retail choices |
 | pipelines | `pipeline-evidence` | §7 | DMF + alert SQL → results → three evidence kinds |
 | pipelines | `external-orchestration` | §8 | vertical Airflow path beside double-run, dbt SQL, ownership |
+| performance | `profile-reading` | §1 | vertical operator tree beside timing, statistics, history SQL |
+| performance | `pruning-scan` | §2 | partition metadata → wrapped vs range query → pruning rules |
+| performance | `cache-measurement` | §3 | three runs → result vs warehouse cache → fair_test.sql |
+| performance | `scale-up-out` | §4 | two symptoms beside credits table, multi-cluster DDL, isolation |
+| performance | `spill-skew-joins` | §5 | profile-signature table → before / after rewrite |
+| performance | `physical-options` | §6 | three-option comparison → estimate + enable SQL → checklist |
+| performance | `cost-sources` | §7 | credit ledger → storage table → transfer |
+| performance | `cost-controls` | §8 | monitor vs budget coverage → controls.sql → gaps |
+| performance | `optimise-evidence` | §9 | vertical loop beside before/after table + decision |
 
 ## Valid `icon:` keys
 
