@@ -36,6 +36,11 @@ Chapter 4 adds: file format `RAW.CSV_ORDERS` (DD/MM/YYYY dates), files `orders_2
 manifest total 410.39) and `orders_resend.csv` (1001–1003 again — the source of RAW's 3 duplicates;
 RAW total 632.79), `RAW.ORDERS` lineage columns `SOURCE_FILE`/`SOURCE_ROW`, `RAW.ORDERS_REJECTS`,
 pipe `RAW.ORDERS_PIPE`, streaming `EVENTS_PIPE` → `RAW.ORDER_EVENTS`, export stage `SALES.EXPORTS`.
+Chapter 5 adds: `ORDERS.STORE_ID` (S-01 Leeds: 1001/1003/1005; S-02 York: 1002/1004/1006),
+`SALES.ORDER_LINES` (1001: 59.50+30.00, 1003: 24.90+30.00+20.00, 1005: 48.00), order→customer
+(1001/1003 C-207, 1002/1006 C-311, 1004 C-150, 1005 C-388), events 1007 (C-412, 2 items) and 1008
+(C-150, no items), `DAILY_REVENUE` = S-01 212.40 / S-02 58.00 on 1 Oct, S-02 120.00 on 2 Oct,
+mart `RETAIL.MART` with type-2 `DIM_CUSTOMER`, UDF `SALES.NET_AMOUNT`, procedure `SALES.RELOAD_DAY`.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -81,6 +86,14 @@ cloud, Region, edition and table type where they matter.
 | loading | `streaming-channels` | §6 | vertical path beside offsets, architectures, path choice |
 | loading | `schema-change` | §7 | evolution DDL → three source changes → responses |
 | loading | `reconcile-unload` | §8 | reconciliation → unload → handoff |
+| transform | `grain-amplification` | §1 | two grain tables → amplified vs right-grain query |
+| transform | `window-latest` | §2 | window SQL → ranked rows → one per customer |
+| transform | `variant-flatten` | §3 | JSON payloads → FLATTEN SQL → flattened rows |
+| transform | `time-numbers` | §4 | tz SQL → two-dates table → type traps → exact.sql |
+| transform | `serving-views` | §5 | view DDL → DAILY_REVENUE → interface comparison |
+| transform | `dimensional-model` | §6 | star schema → type-2 rows → as-was vs as-is |
+| transform | `snowpark-actions` | §7 | Python → per-call movement table → client vs warehouse |
+| transform | `procedures-udfs` | §8 | UDF + procedure DDL → comparison → rights |
 
 ## Valid `icon:` keys
 

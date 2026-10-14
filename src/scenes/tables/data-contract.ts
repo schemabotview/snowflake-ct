@@ -21,6 +21,7 @@ export const dataContract: Scene = {
           columns: [
             { name: 'ORDER_ID', type: 'NUMBER(38,0)', key: 'PK' },
             { name: 'CUSTOMER_ID', type: 'VARCHAR(16)', key: 'FK' },
+            { name: 'STORE_ID', type: 'VARCHAR(8)', key: 'FK' },
             { name: 'ORDER_DATE', type: 'DATE' },
             { name: 'ORDER_STATUS', type: 'VARCHAR(16)' },
             { name: 'ORDER_TOTAL', type: 'NUMBER(10,2)' },

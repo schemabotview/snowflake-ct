@@ -2,6 +2,7 @@ import { platform } from './platform'
 import { access } from './access'
 import { tables } from './tables'
 import { loading } from './loading'
+import { transform } from './transform'
 import type { Course, Section } from './types'
 
 // Course registry, in syllabus order. Courses are added here as each is authored.
@@ -10,6 +11,7 @@ export const COURSES: Record<string, Course> = {
   [access.id]: access,
   [tables.id]: tables,
   [loading.id]: loading,
+  [transform.id]: transform,
 }
 
 export type { Course, Section }
