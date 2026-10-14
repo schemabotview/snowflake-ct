@@ -36,17 +36,17 @@ export const dynamicLag: Scene = {
           kind: 'code',
           filename: 'dynamic_tables.sql',
           label: `CREATE DYNAMIC TABLE retail.mart.orders_clean
-      TARGET_LAG = DOWNSTREAM            -- refresh only when a consumer needs it
-      WAREHOUSE  = load_wh
-    AS SELECT * FROM retail.raw.orders
-       QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY source_row DESC) = 1;
+  TARGET_LAG = DOWNSTREAM            -- refresh only when a consumer needs it
+  WAREHOUSE  = load_wh
+AS SELECT * FROM retail.raw.orders
+   QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY source_row DESC) = 1;
 
-    CREATE DYNAMIC TABLE retail.mart.revenue_dt
-      TARGET_LAG = '15 minutes'          -- the freshness goal for the whole chain
-      WAREHOUSE  = load_wh
-    AS SELECT order_date, store_id, SUM(order_total) AS revenue
-       FROM retail.mart.orders_clean WHERE order_status <> 'CANCELLED'
-       GROUP BY order_date, store_id;`,
+CREATE DYNAMIC TABLE retail.mart.revenue_dt
+  TARGET_LAG = '15 minutes'          -- the freshness goal for the whole chain
+  WAREHOUSE  = load_wh
+AS SELECT order_date, store_id, SUM(order_total) AS revenue
+   FROM retail.mart.orders_clean WHERE order_status <> 'CANCELLED'
+   GROUP BY order_date, store_id;`,
         },
         {
           id: 'refresh-timeline',

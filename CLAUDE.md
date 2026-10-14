@@ -55,6 +55,11 @@ Chapter 8 adds (illustrative, labelled as such on screen): `SALES.ORDERS_HISTORY
 pruned (312 partitions); clustering on ORDER_DATE ≈ 6 credits/day vs 1.5 credits/day saved at 200 runs;
 October ledger (BI_WH 310, LOAD_WH 75, clustering 180 …); resource monitor `BI_MONTHLY` (400 credits);
 tag `OPS.COST_CENTER`.
+Chapter 9 adds: CUSTOMERS columns FULL_NAME, EMAIL, POSTCODE, DATE_OF_BIRTH, HOME_STORE (C-150 S-02,
+C-207 S-01, C-388 S-01); tag `OPS.DATA_OWNER`; policies `OPS.MASK_EMAIL` (role SUPPORT sees clear) and
+`OPS.STORE_ROWS` with mapping table `OPS.STORE_ACCESS` (roles YORK_MGR, LEEDS_MGR); user SUPPORT_BOT;
+share `YORK_PARTNER_SHARE` (database role `RETAIL.PARTNER_READ` → consumer YORKCO); EU partner via a
+private listing with auto-fulfillment; `DAILY_REVENUE_V2` (net of refunds: S-01 1 Oct 212.40 → 192.40).
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -132,6 +137,13 @@ cloud, Region, edition and table type where they matter.
 | performance | `cost-sources` | §7 | credit ledger → storage table → transfer |
 | performance | `cost-controls` | §8 | monitor vs budget coverage → controls.sql → gaps |
 | performance | `optimise-evidence` | §9 | vertical loop beside before/after table + decision |
+| governance | `classify-tag` | §1 | vertical lineage beside classification table + tagging SQL |
+| governance | `policy-results` | §2 | policy DDL → same query as three roles |
+| governance | `audit-evidence` | §3 | access-history query + result beside evidence limits |
+| governance | `share-flow` | §4 | provider ↔ consumer accounts → share DDL + responsibilities |
+| governance | `distribution-options` | §5 | options table → EU listing path → residency / freshness / cost |
+| governance | `consumer-contract` | §6 | four consumers → definition change → v2 view → contract |
+| governance | `policy-testing` | §7 | POLICY_CONTEXT + POLICY_REFERENCES → role matrix → trade-offs |
 
 ## Valid `icon:` keys
 
@@ -210,6 +222,10 @@ builds green, reads correctly, and leaves half its pane empty. Against the ~1080
 Engine note — rows of children: a container **without** internal `edges` lays out a row from
 `cols` alone (adding `flow: 'LR'` there can stack it vertically). A container **with** internal
 `edges` stacks top-to-bottom unless it sets `flow: 'LR'`. Check every container row on the route.
+
+When restacking a scene by moving nodes into a new container, never re-indent the body of a
+`label: \`…\`` template literal: its whitespace renders verbatim, so every continuation line of the
+code card gains visible leading spaces. Re-indent the object keys only.
 
 A wide code card or table sets a column's width and therefore the whole board's scale: shorten
 long comment lines and cell text before restacking.

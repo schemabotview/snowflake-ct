@@ -47,14 +47,14 @@ export const externalOrchestration: Scene = {
           kind: 'code',
           filename: 'run_dbt.sql',
           label: `-- the dbt project is a Snowflake object
-    EXECUTE DBT PROJECT retail.ops.retail_dbt
+EXECUTE DBT PROJECT retail.ops.retail_dbt
   ARGS = 'build --select marts';
 
-    -- ONE owner: this task OR the DAG
-    CREATE TASK retail.ops.nightly_dbt WAREHOUSE = load_wh
-      SCHEDULE = 'USING CRON 0 6 * * * Europe/London'
-    AS EXECUTE DBT PROJECT retail.ops.retail_dbt
-     ARGS = 'build';`,
+-- ONE owner: this task OR the DAG
+CREATE TASK retail.ops.nightly_dbt WAREHOUSE = load_wh
+  SCHEDULE = 'USING CRON 0 6 * * * Europe/London'
+AS EXECUTE DBT PROJECT retail.ops.retail_dbt
+   ARGS = 'build';`,
         },
         {
           id: 'split',

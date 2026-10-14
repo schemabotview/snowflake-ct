@@ -62,9 +62,9 @@ export const scaleUpOut: Scene = {
           kind: 'code',
           filename: 'bi_wh.sql',
           label: `ALTER WAREHOUSE bi_wh SET
-      MIN_CLUSTER_COUNT = 1  MAX_CLUSTER_COUNT = 3   -- auto-scale: Enterprise edition
-      SCALING_POLICY    = STANDARD;                  -- start clusters to avoid queuing
-    -- 09:00–09:45 at 3 clusters: 3 × 2 cr/h × 0.75 h = 4.5 credits; then back to 1`,
+  MIN_CLUSTER_COUNT = 1  MAX_CLUSTER_COUNT = 3   -- auto-scale: Enterprise edition
+  SCALING_POLICY    = STANDARD;                  -- start clusters to avoid queuing
+-- 09:00–09:45 at 3 clusters: 3 × 2 cr/h × 0.75 h = 4.5 credits; then back to 1`,
         },
         {
           id: 'isolation',

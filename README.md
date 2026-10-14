@@ -29,7 +29,7 @@ Routes are `#/<course>-<section>`, e.g. `#/platform-first-query`. `#/` is the ca
 | 6 | `incremental` | Ongoing Changes and Incremental Correctness | 7 | ✓ |
 | 7 | `pipelines` | Pipeline Orchestration and Dynamic Tables | 8 | ✓ |
 | 8 | `performance` | Performance and Cost Reasoning | 9 | ✓ |
-| 9 | `governance` | Governance, Sharing, and Consumption | 7 | |
+| 9 | `governance` | Governance, Sharing, and Consumption | 7 | ✓ |
 | 10 | `operations` | Delivery, Operations, and Recovery | 9 | |
 | 11 | `architecture` | Integrated Architecture and Evolution | 5 | |
 

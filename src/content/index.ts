@@ -6,6 +6,7 @@ import { transform } from './transform'
 import { incremental } from './incremental'
 import { pipelines } from './pipelines'
 import { performance } from './performance'
+import { governance } from './governance'
 import type { Course, Section } from './types'
 
 // Course registry, in syllabus order. Courses are added here as each is authored.
@@ -18,6 +19,7 @@ export const COURSES: Record<string, Course> = {
   [incremental.id]: incremental,
   [pipelines.id]: pipelines,
   [performance.id]: performance,
+  [governance.id]: governance,
 }
 
 export type { Course, Section }

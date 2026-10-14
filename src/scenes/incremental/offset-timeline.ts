@@ -38,11 +38,11 @@ export const offsetTimeline: Scene = {
           kind: 'code',
           filename: 'stream.sql',
           label: `CREATE STREAM retail.raw.customer_changes_s
-      ON TABLE retail.raw.customer_changes
-      APPEND_ONLY = TRUE;                        -- the log only ever gets inserts (§4)
+  ON TABLE retail.raw.customer_changes
+  APPEND_ONLY = TRUE;                        -- the log only ever gets inserts (§4)
 
-    SELECT SYSTEM$STREAM_HAS_DATA('retail.raw.customer_changes_s');   -- TRUE: 4 new rows
-    SHOW STREAMS LIKE 'customer_changes_s';    -- stale, stale_after`,
+SELECT SYSTEM$STREAM_HAS_DATA('retail.raw.customer_changes_s');   -- TRUE: 4 new rows
+SHOW STREAMS LIKE 'customer_changes_s';    -- stale, stale_after`,
         },
         {
           id: 'staleness',
