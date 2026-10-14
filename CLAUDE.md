@@ -45,6 +45,11 @@ Chapter 6 adds: CDC log `RAW.CUSTOMER_CHANGES` (SOURCE_SEQ, OP, CUSTOMER_ID, CIT
 LOADED_AT) with 2 Oct events 101 U C-207 Leeds 09:00 · 102 I C-388 Bath 10:15 · 103 U C-207 York 11:30 ·
 104 D C-311 12:00 (101 arrives late, after 103); append-only stream `RAW.CUSTOMER_CHANGES_S` (+ audit
 stream); `SALES.CUSTOMERS` carries `SOURCE_SEQ` (before: C-150 Derby 37, C-207 Hull 64, C-311 Ripon 88).
+Chapter 7 adds: schema `RETAIL.OPS` with tasks `LOAD_ORDERS` (root, CRON 05:30 Europe/London, LOAD_WH),
+`CLEAN_ORDERS`, `BUILD_LINES` ∥ `BUILD_CUSTOMER`, finalizer `FINALIZE_RUN`; triggered serverless
+`APPLY_CUSTOMERS`; 3 Oct run where BUILD_LINES failed; dynamic tables `MART.ORDERS_CLEAN` (DOWNSTREAM)
+→ `MART.REVENUE_DT` (15 min; 09:24 refresh missed at 22 min); DMFs + alert `OPS.ORDERS_STALE`;
+dbt project `OPS.RETAIL_DBT`; the 4 Oct double-scheduled build.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -105,6 +110,14 @@ cloud, Region, edition and table type where they matter.
 | incremental | `incremental-merge` | §5 | guarded MERGE → before / after tables |
 | incremental | `late-arrivals` | §6 | arrival table → rule table → tombstone + business time |
 | incremental | `recovery-decisions` | §7 | situation table → rebuild.sql → principles |
+| pipelines | `task-anatomy` | §1 | two task kinds → tasks.sql → prerequisites table |
+| pipelines | `task-graph` | §2 | graph beside run identity → graph.sql |
+| pipelines | `partial-failure` | §3 | run table → recover.sql → safety principles |
+| pipelines | `dynamic-lag` | §4 | vertical DT chain beside DDL, refresh history, lag rules |
+| pipelines | `refresh-modes` | §5 | mode table → FULL blockers → lifecycle table |
+| pipelines | `choose-automation` | §6 | comparison → customers as a DT → retail choices |
+| pipelines | `pipeline-evidence` | §7 | DMF + alert SQL → results → three evidence kinds |
+| pipelines | `external-orchestration` | §8 | vertical Airflow path beside double-run, dbt SQL, ownership |
 
 ## Valid `icon:` keys
 
@@ -183,6 +196,9 @@ builds green, reads correctly, and leaves half its pane empty. Against the ~1080
 Engine note — rows of children: a container **without** internal `edges` lays out a row from
 `cols` alone (adding `flow: 'LR'` there can stack it vertically). A container **with** internal
 `edges` stacks top-to-bottom unless it sets `flow: 'LR'`. Check every container row on the route.
+
+A wide code card or table sets a column's width and therefore the whole board's scale: shorten
+long comment lines and cell text before restacking.
 
 Levers: **add real content, not padding**; **restack** a board toward the pane's ~1:1 aspect; lower
 scene `padding` to 0.04 for boards that float, **raise** it (0.12–0.17) for tall boards that touch
