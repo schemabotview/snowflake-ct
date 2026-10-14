@@ -1,0 +1,10 @@
+/* This repo's whole design surface — the three tokens @graphlearning/shell leaves to the repo.
+   Imported AFTER the shell's stylesheet in main.tsx, so these win the cascade.
+
+   Snowflake blue as --brand, its lighter tint as --brand-hover, and a warm amber counter tone as
+   --accent-2 (the slide subheadings) so it reads against the blue rather than beside it. */
+:root {
+  --brand: #29b5e8; /* the subject's identity colour */
+  --brand-hover: #69cbef; /* a lighter tint — the eyebrow's hover state */
+  --accent-2: #fbbf24; /* the counter tone — the slide's `###` subheading */
+}

@@ -1,0 +1,14 @@
+{
+  "_comment": "Curated publish titles (YouTube title + thumbnail header) per course, keyed by course id. Search-first: what someone would actually type, never 'Course 4'. One entry per course in src/content/index.ts.",
+  "platform": "Snowflake Architecture Explained: Storage, Compute, Warehouses and Your First Query",
+  "access": "Snowflake Roles, Privileges and Access Control Explained",
+  "tables": "Snowflake Tables, Transactions, MERGE, Time Travel and Zero-Copy Clones",
+  "loading": "Snowflake Data Loading: Stages, COPY INTO, Snowpipe and Reconciliation",
+  "transform": "Snowflake SQL Transformations: Windows, VARIANT, Views and Snowpark",
+  "incremental": "Snowflake Streams and Incremental MERGE: Change Data Capture Explained",
+  "pipelines": "Snowflake Tasks vs Dynamic Tables: Pipeline Orchestration Explained",
+  "performance": "Snowflake Performance Tuning and Cost: Query Profile, Pruning, Warehouse Sizing",
+  "governance": "Snowflake Data Governance: Masking, Row Access Policies and Secure Data Sharing",
+  "operations": "Snowflake Operations: Deployment, Time Travel, Fail-safe and Replication",
+  "architecture": "Designing a Snowflake Data Product: End-to-End Architecture Decisions"
+}
