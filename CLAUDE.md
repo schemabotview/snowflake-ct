@@ -60,6 +60,13 @@ C-207 S-01, C-388 S-01); tag `OPS.DATA_OWNER`; policies `OPS.MASK_EMAIL` (role S
 `OPS.STORE_ROWS` with mapping table `OPS.STORE_ACCESS` (roles YORK_MGR, LEEDS_MGR); user SUPPORT_BOT;
 share `YORK_PARTNER_SHARE` (database role `RETAIL.PARTNER_READ` → consumer YORKCO); EU partner via a
 private listing with auto-fulfillment; `DAILY_REVENUE_V2` (net of refunds: S-01 1 Oct 212.40 → 192.40).
+Chapter 10 adds: Git repo `retail-platform` deployed as a DCM project to targets dev / test (`RETAIL_DEV`,
+`RETAIL_TEST` in `DEV`) and prod (`RETAIL` in `PROD`); `DEPLOY_SVC` (SERVICE) with role `RETAIL_DEPLOYER`;
+release 1.4 (`SALES.REFUNDS`, `DAILY_REVENUE_V2`; pre-release clone `RETAIL_PRE_1_4`); the failed 6 Oct
+rename `ORDER_TOTAL` → `GROSS_TOTAL`; the 7 Oct incident (IAM trust policy edited 6 Oct 22:10 →
+`LOAD_ORDERS` failed 05:30 → fixed 08:40); roles `RETAIL_OPS`, `RETAIL_AUDITOR`; `PROD_DR` in AWS US East
+(PROD is Enterprise in AWS US West: replication yes, failover no), 30-min refresh, RPO ≤ 60 min, RTO ≤ 2 h;
+the 9 Oct leaked `LOADER_SVC` key; the `BI_WH` 3-cluster runaway weekend.
 
 Teaching order per section, from the plan: objective → mental model → annotated example and expected
 behaviour → alternative or failure contrast → summary → bridge.
@@ -144,6 +151,15 @@ cloud, Region, edition and table type where they matter.
 | governance | `distribution-options` | §5 | options table → EU listing path → residency / freshness / cost |
 | governance | `consumer-contract` | §6 | four consumers → definition change → v2 view → contract |
 | governance | `policy-testing` | §7 | POLICY_CONTEXT + POLICY_REFERENCES → role matrix → trade-offs |
+| operations | `environments` | §1 | Git repo → per-target table → DEFINE code → rules |
+| operations | `deploy-order` | §2 | vertical dependency order beside deployer DDL + practice table |
+| operations | `release-checks` | §3 | check table → contract-test SQL → after-deploy row |
+| operations | `migration-rollback` | §4 | failed-state table → rename vs expand/contract → pre-release clone |
+| operations | `incident-diagnosis` | §5 | vertical walk-back beside task_history SQL, timeline, follow-ups |
+| operations | `telemetry-sources` | §6 | source comparison → database-role grants → question row |
+| operations | `recovery-layers` | §7 | mechanism table → table-type boundaries → backup sketch |
+| operations | `failover-plan` | §8 | two accounts → edition table → RPO/RTO → outside dependencies |
+| operations | `security-runbook` | §9 | leaked-key runbook → runaway-warehouse runbook → principles |
 
 ## Valid `icon:` keys
 
