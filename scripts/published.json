@@ -1,0 +1,61 @@
+{
+  "channelId": "UCo9qk2FZeoS79LHYYDln6Tw",
+  "verifiedAt": "2026-10-16",
+  "courses": {
+    "platform": {
+      "videoId": "l3u7uuJ5HaE",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "access": {
+      "videoId": "bZ_lcEbF4xY",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "tables": {
+      "videoId": "Cj6MyqVo0MU",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "architecture": {
+      "videoId": "ogjV-PJ71Cc",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "operations": {
+      "videoId": "7v2aB5O3DJE",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "governance": {
+      "videoId": "XL2Ksy_qe1k",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "performance": {
+      "videoId": "LZ_DxxnXIaA",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "pipelines": {
+      "videoId": "uBc34ima9as",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "incremental": {
+      "videoId": "0D2B_X0vwPc",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "transform": {
+      "videoId": "enSXpEuqAVo",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    },
+    "loading": {
+      "videoId": "1JQHiLA3A48",
+      "publishedAt": "2026-10-16",
+      "visibility": "public"
+    }
+  }
+}
